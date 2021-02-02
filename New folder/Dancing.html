@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head> 
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+     <title>Dog Running</title>
+    </head>
+   
+    <body style="text-align : center">
+        <img src="dog0.gif"/>
+		<audio id="catMusicID" src="OneMoreTime.mp3" preload="auto">
+		</audio>
+		
+        <script type="text/javascript">
+              var i = 0
+			  var frame = 0;
+              var clickNum = 0;
+              var waitTime = 175;			  
+              var timerID;				    
+              var pics = new Array (11);
+			  var s = document.getElementById("catMusicID");
+			  
+			  
+              for (i=0;i<pics.length ; i++) {	 //Init. array for images
+                      pics[i] = new Image();
+              }
+			  
+			  //Prefetch images
+              for (i=0;i<pics.length; i++) {	                   
+                      pics[i].src = "dog" + i + ".gif";
+              }
+			  
+			  //Draw pic, call self
+              function dogAnimateFun () {				                    	 
+                 document.images[0].src = pics[frame].src;	//Change pic
+                 frame = (1+frame)%11;				        //Move to next frame
+                 timerID = setTimeout("dogAnimateFun()", waitTime);   	//Schedule next tick
+              }
+			  
+               function playMusic() 
+              {
+                 s.play();
+              }
+
+              function stopMusic() 
+              {
+                 s.pause();
+                 s.currentTime = 0;
+              
+              }			  
+        </script>
+		 
+           <form activity="">
+              <input type="button" value="Dance!" 
+			         onclick='
+					          if(clickNum > 0)
+							  {
+							     clearTimeout(timerID);
+							  }
+					          clickNum++;
+							  waitTime = waitTime/1.5;   
+					          timerID=setTimeout("dogAnimateFun()", waitTime);
+							 s.defaultPlaybackRate = s.defaultPlaybackRate * 1.10;  
+                               playMusic()
+							 '/>
+							 
+						
+			       
+							  
+              <input type="button" value="Stop" 
+			         onclick='
+					          clearTimeout(timerID);
+							  stopMusic()							  
+							  '/>
+        </form>
+		
+    </body>
+</html>
